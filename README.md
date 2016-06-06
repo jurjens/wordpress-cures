@@ -97,6 +97,23 @@ SetEnvIfNoCase Request_URI \.(?:avi|mov|mp3|mp4|rm)$ no-gzip dont-vary
 php_flag zlib.output_compression on
 ```
 
+### 2.3 Browser caching
+
+Set the default `Expires` headers to a month in the future.
+
+```
+# Enable expres headers
+ExpiresActive On
+ExpiresDefault A0
+ExpiresByType image/gif A2592000
+ExpiresByType image/png A2592000
+ExpiresByType image/jpg A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType image/ico A2592000
+ExpiresByType text/css A2592000
+ExpiresByType text/javascript A2592000
+```
+
 ## 3 References
 
 - [1]: Wordpress.org, official documentation: https://codex.wordpress.org/Moving_WordPress#If_You_Have_Accidentally_Changed_your_WordPress_Site_URL
