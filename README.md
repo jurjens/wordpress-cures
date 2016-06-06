@@ -70,6 +70,33 @@ NB: url's of images in posts will not be changed.
 
 _TODO: document the sql query to fix this_
 
+### 2.2 Enable GZIP compression
+
+Google Pagespeed is loves it. And your visitors too, because your site will be faster. Woop woop!
+
+Paste this in your .htaccess
+
+```
+# Enable compression
+<IfModule mod_deflate.c>
+    # Insert output filter by type
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+    AddOutputFilterByType DEFLATE application/x-httpd-php
+    AddOutputFilterByType DEFLATE application/cgi-php5
+    AddOutputFilterByType DEFLATE application/cgi-php53
+    AddOutputFilterByType DEFLATE application/cgi-php54
+</IfModule>
+# Don't compress images, compressed files, docs nor movies
+SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+SetEnvIfNoCase Request_URI \.(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
+SetEnvIfNoCase Request_URI \.(?:pdf|doc)$ no-gzip dont-vary
+SetEnvIfNoCase Request_URI \.(?:avi|mov|mp3|mp4|rm)$ no-gzip dont-vary
+
+php_flag zlib.output_compression on
+```
+
 ## 3 References
 
 - [1]: Wordpress.org, official documentation: https://codex.wordpress.org/Moving_WordPress#If_You_Have_Accidentally_Changed_your_WordPress_Site_URL
