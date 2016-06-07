@@ -52,9 +52,9 @@ of my screen.
 show_admin_bar(false);
 ```
 
-## 2. Other tricks and common uses
+## 2. Other tricks
 
-### 2.1 Changing the Wordpress Site URL [1](https://codex.wordpress.org/Moving_WordPress#If_You_Have_Accidentally_Changed_your_WordPress_Site_URL)
+### 2.1 Changing the Wordpress Site URL [1]
 
 Open up `wp_login.php` and insert these lines of code
 after `require( dirname(__FILE__) . '/wp-load.php' );` (_without_ trailing 
@@ -97,7 +97,24 @@ SetEnvIfNoCase Request_URI \.(?:avi|mov|mp3|mp4|rm)$ no-gzip dont-vary
 php_flag zlib.output_compression on
 ```
 
-### 2.3 Browser caching
+### 2.3 Compress images [2]
+
+By compressing your images without losing any image quality you can decrease file size, and as such increase your site's speed and PageSpeed scores.
+
+Run `jpegoptim` and `optipng` in a cronjob to automatically compress newly uploaded images. Don't forget to run the command the first time manually without the `-mtime` switch to optimize all older images.
+
+Put these to lines in your crontab (`crontab -e`):
+
+```
+0 1 * * 0 lockrun -Q -L .lockjpegoptim -- find /path/to/wordpress/wp-content/uploads/ -mtime -7 -iname *.jpg -exec jpegoptim --strip-all -p {} \; > /dev/null
+0 3 * * 0 lockrun -Q -L .lockoptipng -- find /path/to/wordpress/wp-content/uploads/ -mtime -7 -iname *.png -exec optipng -o7 -preserve {} \; > /dev/null
+```
+
+If you don't have a crontab or one of those tools available you can use a service like [reSmush.it](http://www.resmush.it/). It has a few downsides though (images may not be larger then 1mb).
+
+Via: [Byte](https://www.byte.nl/blog/image-optimization-using-cronjobs)
+
+### 2.4 Browser caching
 
 Set the default `Expires` headers to a month in the future.
 
@@ -117,3 +134,4 @@ ExpiresByType text/javascript A2592000
 ## 3 References
 
 - [1]: Wordpress.org, official documentation: https://codex.wordpress.org/Moving_WordPress#If_You_Have_Accidentally_Changed_your_WordPress_Site_URL
+- [2]: Byte Blog: https://www.byte.nl/blog/image-optimization-using-cronjobs
