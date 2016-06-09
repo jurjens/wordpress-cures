@@ -40,18 +40,6 @@ remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
 remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
 ```
 
-### 1.3 Disable admin bar
-
-**What's the problem?** The ever present admin bar on top of the screen. You may
-like it and skip this part. I found it totally useless, and as such just a waste
-of my screen.
-
-**How to fix?**
-
-```php
-show_admin_bar(false);
-```
-
 ## 2. Other tricks
 
 ### 2.1 Changing the Wordpress Site URL [1]
