@@ -13,7 +13,7 @@ just get started.
 ### 1.1 Optimize image quality
 
 **What's the problem?** Wordpress automatically compresses uploaded images. Which is good in
-terms of disk usage and site speed, but if you don't want your crisp and 
+terms of disk usage and site speed, but not if you don't want your crisp and 
 beautiful artwork to get vague.
 
 **How to fix?**
